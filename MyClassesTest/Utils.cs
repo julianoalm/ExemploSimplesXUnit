@@ -10,7 +10,7 @@ namespace MyClassesTest
     {
         public static string SetGoodFileName()
         {
-            //adicionar um json como settings
+            //adicionar um json como settings.....
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             var _GoodFileName = config["GoodFileName"].ToString();
