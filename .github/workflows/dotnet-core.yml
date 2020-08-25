@@ -1,26 +1,30 @@
-name: .NET Core
-
+name: CI
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+    branches:
+      - master
+    tags:
+      - 'v*.*.*'
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal --collect "Code coverage"
-    
+        dotnet-version: 3.1
+    - name: Generate coverage report
+      run: |
+        cd ./MyClassesTest/
+        dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        path-to-lcov: ./MyClassesTest/TestResults/coverage.info 
+    - name: Build and deploy package
+      run: |
+        cd ./MyClassesTest/
+        dotnet publish -c=Release
+        # deploy
