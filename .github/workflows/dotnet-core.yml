@@ -23,9 +23,11 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./MyClassesTest/TestResults/coverage.info 
-    - name: Build and deploy package
-      run: |
-        cd ./MyClassesTest/
-        dotnet publish -c=Release
-        # deploy
+        path-to-lcov: ./MyClassesTest/TestResults/coverage.info
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Deploy package
+      run: dotnet publish -c=Release
+        
