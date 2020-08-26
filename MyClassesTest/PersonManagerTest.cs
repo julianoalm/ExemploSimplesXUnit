@@ -34,5 +34,39 @@ namespace MyClassesTest
 
             Assert.True(super.Employess.Count > 0);
         }
+
+        [Fact]
+        [Trait("Owner", "Juliano")]
+        public void DoFirstNameEmployeeExistsTest()
+        {
+            PersonManager perMgr = new PersonManager();
+            Person per;
+
+            per = perMgr.CreatePerson("Juliano", "Alves", false);
+
+            Assert.NotNull(per);
+        }
+
+        [Fact]
+        [Trait("Owner", "Juliano")]
+        public void DoFirstNameEmployeeDoNotExistsTest()
+        {
+            PersonManager perMgr = new PersonManager();
+            Person per;
+
+            per = perMgr.CreatePerson("", "Alves", false);
+
+            Assert.Null(per);
+        }
+
+        [Fact]
+        [Trait("Owner", "Juliano")]
+        public void GetSupervisorTest()
+        {
+            Supervisor super = new Supervisor();
+            super.Employess = new List<Employee>();            
+
+            Assert.False(super.Employess.Count > 0);
+        }
     }
 }

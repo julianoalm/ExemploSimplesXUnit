@@ -94,5 +94,25 @@ namespace MyClassesTest
         }
 
         #endregion
+
+        [Fact]
+        [Trait("Owner", "Juliano")]
+        public void GetFirstNameTest()
+        {
+            Person per = new Person();
+            per.FirstName = "Juliano";
+            
+            Assert.Contains("Juliano", per.FirstName);
+        }
+
+        [Fact]
+        [Trait("Owner", "Juliano")]
+        public void GetLastNameTest()
+        {
+            Person per = new Person();
+            per.LastName = "Martins";
+
+            Assert.Contains("Martins", per.LastName);
+        }
     }
 }
